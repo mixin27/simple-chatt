@@ -11,7 +11,7 @@ const ChatPage = () => {
   };
 
   useEffect(() => {
-    fetchChats();
+    // fetchChats();
   }, []);
 
   return (

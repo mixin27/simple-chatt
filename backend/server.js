@@ -1,33 +1,39 @@
 import express, { json } from "express";
 import dotenv from "dotenv";
+import morgan from "morgan";
+import "colors";
 
-import { chats } from "./data/data.js";
+import { connectDB } from "./config/db.js";
+import { errorHandler, notFound } from "./middlewares/errors.js";
+
+import userRoutes from "./routes/userRoutes.js";
 
 dotenv.config();
+connectDB();
 
 const app = express();
 
-// middlewares
-app.use(json());
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
-app.get("/", (req, res) => {
+// middlewares
+app.use(json()); // To accept JSON data
+
+app.get("/api", (req, res) => {
   res.send("Yoyo Chatt API is running...");
 });
 
-app.get("/api/chat", (req, res) => {
-  res.send(chats);
-});
+app.use("/api/user", userRoutes);
 
-app.get("/api/chat/:id", (req, res) => {
-  const { id } = req.params;
-
-  const singleChat = chats.find((c) => c._id === id);
-
-  res.send(singleChat);
-});
+// errors
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
-  console.log(`Server started on port ${PORT}`);
+  console.log(
+    `🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow
+      .bold
+  );
 });
