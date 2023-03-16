@@ -8,7 +8,7 @@ import ChatLoading from "../common/ChatLoading";
 import GroupChatModal from "../common/GroupChatModal";
 import { getSender } from "../../config/chat-logics";
 
-const ChatList = ({ fetchAgain, setFetchAgain }) => {
+const ChatList = ({ fetchAgain }) => {
   const { selectedChat, setSelectedChat, user, chats, setChats } =
     useChatState();
 
@@ -48,7 +48,10 @@ const ChatList = ({ fetchAgain, setFetchAgain }) => {
 
   return (
     <Box
-      diplay={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+      diplay={{
+        base: selectedChat ? "none" : "flex",
+        md: "flex",
+      }}
       flexDir="column"
       alignItems="center"
       p={3}
