@@ -3,7 +3,6 @@ import asyncHandler from "express-async-handler";
 import Message from "../models/messageModel.js";
 import User from "../models/userModel.js";
 import Chat from "../models/chatModel.js";
-import mongoose from "mongoose";
 
 const sendMessage = asyncHandler(async (req, res) => {
   const { content, chatId } = req.body;
@@ -33,7 +32,11 @@ const sendMessage = asyncHandler(async (req, res) => {
       latest_message: message,
     });
 
-    res.json(message);
+    res.json({
+      data: message,
+      success: true,
+      message: "success",
+    });
   } catch (error) {
     res.status(400);
     throw new Error(error.message);
@@ -46,7 +49,11 @@ const allMessages = asyncHandler(async (req, res) => {
       .populate("sender", "name avatar email")
       .populate("chat");
 
-    res.json(messages);
+    res.json({
+      data: messages,
+      success: true,
+      message: "success",
+    });
   } catch (error) {
     res.status(400);
     throw new Error(error.message);

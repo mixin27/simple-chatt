@@ -31,11 +31,17 @@ const regiseterUser = asyncHandler(async (req, res) => {
 
   if (user) {
     res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      token: generateToken(user._id),
+      data: {
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+        },
+        token: generateToken(user._id),
+      },
+      success: true,
+      message: "Register successfully.",
     });
   } else {
     res.status(400);
@@ -53,11 +59,17 @@ const authUser = asyncHandler(async (req, res) => {
 
   if (user && (await user.matchPassword(password))) {
     res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      avatar: user.avatar,
-      token: generateToken(user._id),
+      data: {
+        user: {
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          avatar: user.avatar,
+        },
+        token: generateToken(user._id),
+      },
+      success: true,
+      message: "Login successfully.",
     });
   } else {
     res.status(400);
@@ -82,7 +94,11 @@ const allUsers = asyncHandler(async (req, res) => {
 
   const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
 
-  res.send(users);
+  res.send({
+    data: users,
+    success: true,
+    message: "success",
+  });
 });
 
 export { regiseterUser, authUser, allUsers };

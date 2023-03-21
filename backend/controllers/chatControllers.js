@@ -45,7 +45,11 @@ const accessChat = asyncHandler(async (req, res) => {
         "-password"
       );
 
-      res.status(200).send(fullChat);
+      res.status(200).send({
+        data: fullChat,
+        success: true,
+        message: "success",
+      });
     } catch (err) {
       res.status(400);
       throw new Error(err.message);
@@ -69,7 +73,11 @@ const fetchChats = asyncHandler(async (req, res) => {
           select: "name avatar email",
         });
 
-        res.status(200).send(results);
+        res.status(200).send({
+          data: results,
+          success: true,
+          message: "success",
+        });
       });
   } catch (err) {
     res.status(400);
@@ -106,7 +114,11 @@ const createGroupChat = asyncHandler(async (req, res) => {
       .populate("users", "-password")
       .populate("group_admin", "-password");
 
-    res.status(200).json(fullGroupChat);
+    res.status(200).json({
+      data: fullGroupChat,
+      success: true,
+      message: "success",
+    });
   } catch (err) {
     res.status(400);
     throw new Error(err.message);
@@ -136,7 +148,11 @@ const renameGroup = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Chat no found.");
   } else {
-    res.json(updatedChat);
+    res.json({
+      data: updatedChat,
+      success: true,
+      message: "success",
+    });
   }
 });
 
@@ -157,7 +173,11 @@ const addUserToGroup = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Chat not found.");
   } else {
-    res.json(added);
+    res.json({
+      data: added,
+      success: true,
+      message: "success",
+    });
   }
 });
 
@@ -178,7 +198,11 @@ const removeUserFromGroup = asyncHandler(async (req, res) => {
     res.status(404);
     throw new Error("Chat not found.");
   } else {
-    res.json(removed);
+    res.json({
+      data: removed,
+      success: true,
+      message: "success",
+    });
   }
 });
 

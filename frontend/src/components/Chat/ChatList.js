@@ -48,17 +48,14 @@ const ChatList = ({ fetchAgain }) => {
 
   return (
     <Box
-      diplay={{
-        base: selectedChat ? "none" : "flex",
-        md: "flex",
-      }}
+      diplay={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDir="column"
       alignItems="center"
       p={3}
       bg="white"
       w={{ base: "100%", md: "31%" }}
       borderRadius="lg"
-      borderWidth="10px"
+      borderWidth="1px"
     >
       <Box
         pb={3}
@@ -96,7 +93,6 @@ const ChatList = ({ fetchAgain }) => {
           <Stack overflowY="scroll">
             {chats.map((chat) => (
               <Box
-                key={chat._id}
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
                 bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
@@ -104,6 +100,7 @@ const ChatList = ({ fetchAgain }) => {
                 px={3}
                 py={2}
                 borderRadius="lg"
+                key={chat._id}
               >
                 <Text>
                   {!chat.is_group_chat

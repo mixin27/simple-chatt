@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import "colors";
 import { Server } from "socket.io";
+import path from "path";
 
 import { connectDB } from "./config/db.js";
 import { errorHandler, notFound } from "./middlewares/errors.js";
@@ -23,20 +24,33 @@ if (process.env.NODE_ENV === "development") {
 // middlewares
 app.use(json()); // To accept JSON data
 
-app.get("/api", (req, res) => {
-  res.send("Yoyo Chatt API is running...");
-});
-
 app.use("/api/user", userRoutes);
 app.use("/api/chats", chatRoutes);
 app.use("/api/message", messageRoutes);
+
+// -------------------- Deployment ------------------------------
+
+const __dirname1 = path.resolve();
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/frontend/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
+  });
+} else {
+  app.get("/api", (req, res) => {
+    res.send("Yoyo Chatt API is running...");
+  });
+}
+
+// -------------------- Deployment ------------------------------
 
 // errors
 app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, "0.0.0.0", () => {
   console.log(
     `🚀 Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow
       .bold
