@@ -51,7 +51,7 @@ const GroupChatModal = ({ children }) => {
       console.log(data);
 
       setLoading(false);
-      setSearchResult(data);
+      setSearchResult(data.data);
     } catch (error) {
       toast({
         title: "Error occurred!",
@@ -92,12 +92,12 @@ const GroupChatModal = ({ children }) => {
         "/api/chats/group",
         {
           name: groupChatName,
-          users: JSON.stringify(selectedUsers.map((u) => u._id)),
+          users: JSON.stringify(selectedUsers.map((u) => u.data._id)),
         },
         config
       );
 
-      setChats([data, ...chats]);
+      setChats([data.data, ...chats]);
       onClose();
 
       toast({
@@ -136,7 +136,9 @@ const GroupChatModal = ({ children }) => {
   };
 
   const handleDelete = (user) => {
-    setSelectedUsers(selectedUsers.filter((item) => item._id !== user._id));
+    setSelectedUsers(
+      selectedUsers.filter((item) => item._id !== user.data._id)
+    );
   };
 
   return (

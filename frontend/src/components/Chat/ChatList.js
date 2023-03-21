@@ -20,13 +20,13 @@ const ChatList = ({ fetchAgain }) => {
     try {
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.data.token}`,
         },
       };
 
       const { data } = await axios.get("/api/chats", config);
       console.log(data);
-      setChats(data);
+      setChats(data.data);
     } catch (error) {
       toast({
         title: "Error occurred!",
@@ -41,6 +41,7 @@ const ChatList = ({ fetchAgain }) => {
 
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+    console.log(loggedUser);
     fetchChats();
 
     // eslint-disable-next-line
@@ -104,7 +105,7 @@ const ChatList = ({ fetchAgain }) => {
               >
                 <Text>
                   {!chat.is_group_chat
-                    ? getSender(loggedUser, chat.users)
+                    ? getSender(loggedUser.data, chat.users)
                     : chat.name}
                 </Text>
 

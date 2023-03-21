@@ -20,7 +20,7 @@ class AppInterceptors extends Interceptor {
     // Tries to add Authorization header only if Authorization header
     // not existed
     if (!options.headers.containsKey(HttpHeaders.authorizationHeader)) {
-      const token = "FakeToken";
+      const token = "fake-token";
 
       options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
     }

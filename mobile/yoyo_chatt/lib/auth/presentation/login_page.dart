@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:yoyo_chatt/auth/cubit/guest_cubit.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yoyo_chatt/auth/controller/auth_controller.dart';
 import 'package:yoyo_chatt/routes/app_router.gr.dart';
 
 @RoutePage()
@@ -16,24 +16,31 @@ class LoginPage extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        children: const [
-          LoginForm(),
+        children: [
+          const LoginForm(),
+          const SizedBox(height: 20),
+          TextButton(
+            onPressed: () {
+              context.router.push(const RegisterRoute());
+            },
+            child: const Text("Register"),
+          ),
         ],
       ),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends StatefulHookConsumerWidget {
   const LoginForm({
     super.key,
   });
 
   @override
-  State<LoginForm> createState() => _LoginFormState();
+  ConsumerState<LoginForm> createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginFormState extends ConsumerState<LoginForm> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -42,8 +49,6 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<GuestCubit>();
-
     return Form(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,6 +70,7 @@ class _LoginFormState extends State<LoginForm> {
           const SizedBox(height: 10),
           TextFormField(
             controller: _passwordController,
+            obscureText: true,
             keyboardType: TextInputType.visiblePassword,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
@@ -82,24 +88,28 @@ class _LoginFormState extends State<LoginForm> {
                     _isLoading = true;
                   });
 
-                  final result = await cubit.signIn(
-                    email: _emailController.text.trim(),
-                    password: _passwordController.text.trim(),
+                  final result = await ref.read(authControllerProvider).signIn(
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text.trim(),
+                      );
+
+                  result.fold(
+                    (l) {
+                      setState(() {
+                        _isLoading = false;
+                        _errorMessage = l.maybeMap(
+                          orElse: () => "Unknown error",
+                          server: (_) => _.message,
+                        );
+                      });
+                    },
+                    (r) {
+                      setState(() {
+                        _isLoading = false;
+                      });
+                      context.router.replaceAll([const ChatListRoute()]);
+                    },
                   );
-
-                  if (result != null) {
-                    setState(() {
-                      _errorMessage = result;
-                    });
-                  } else {
-                    if (!mounted) return;
-
-                    context.router.replaceAll([const HomeRoute()]);
-                  }
-
-                  setState(() {
-                    _isLoading = false;
-                  });
                 },
                 style: FilledButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 15),
