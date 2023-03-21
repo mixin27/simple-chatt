@@ -4,19 +4,28 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:search_page/search_page.dart';
 import 'package:yoyo_chatt/auth/controller/auth_controller.dart';
 import 'package:yoyo_chatt/auth/models/credential.dart';
-import 'package:yoyo_chatt/chat/chat_list/models/chat_model.dart';
+import 'package:yoyo_chatt/chat/chat_list/domain/chat_model.dart';
+import 'package:yoyo_chatt/chat/chat_list/shared/chat_providers.dart';
+import 'package:yoyo_chatt/core/providers/core_providers.dart';
 import 'package:yoyo_chatt/core/utils/logger.dart';
 import 'package:yoyo_chatt/core/widgets/startup_container.dart';
 import 'package:yoyo_chatt/routes/app_router.gr.dart';
 
 @RoutePage()
-class ChatListPage extends StatelessWidget {
+class ChatListPage extends HookConsumerWidget {
   const ChatListPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final chatsState = ref.watch(getChatsNotifierProvider);
+    final currentUser = ref.watch(currentUserProvider);
+
+    if (currentUser == null) return const SizedBox();
+
     return StartUpContainer(
-      onInit: () {},
+      onInit: () {
+        ref.read(getChatsNotifierProvider.notifier).getAllChats();
+      },
       child: Scaffold(
         appBar: AppBar(
           title: Column(
@@ -30,7 +39,7 @@ class ChatListPage extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                "currentUser.name",
+                currentUser.name,
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
@@ -43,6 +52,12 @@ class ChatListPage extends StatelessWidget {
                 return PopupMenuButton(
                   itemBuilder: (context) {
                     return [
+                      PopupMenuItem(
+                        onTap: () {
+                          context.router.push(const NewGroupRoute());
+                        },
+                        child: const Text("New Group"),
+                      ),
                       PopupMenuItem(
                         onTap: () async {
                           final result =
@@ -63,41 +78,51 @@ class ChatListPage extends StatelessWidget {
             ),
           ],
         ),
-        // floatingActionButton:
-        //     BlocSelector<UserBloc, UserState, List<UserEntity>>(
-        //   selector: (state) {
-        //     return state.map(
-        //       initial: (_) => [],
-        //       loaded: (state) => state.users,
-        //     );
-        //   },
-        //   builder: (context, state) {
-        //     return FloatingActionButton(
-        //       onPressed: () => _showSearch(context, state),
-        //       child: const Icon(Icons.message),
-        //     );
-        //   },
-        // ),
-        body: RefreshIndicator(
-          onRefresh: () async {},
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            itemBuilder: (context, index) {
-              return const SizedBox();
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _showSearch(context, []),
+          child: const Icon(Icons.message),
+        ),
+        body: chatsState.map(
+          initial: (_) => const SizedBox(),
+          loading: (_) => const Center(
+            child: CircularProgressIndicator(),
+          ),
+          empty: (_) => Center(
+            child: Text(
+              "No chats available.",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          success: (_) {
+            final chats = _.chats;
 
-              // return ChatListItem(
-              //   key: ValueKey(chat.id),
-              //   chat: chat,
-              //   currentUser: currentUser,
-              //   onTap: (chat) {
-              //     chatBloc.add(ChatSelected(chat));
-              //     vLog(chat);
-              //     context.router.push(const ChatRoute());
-              //   },
-              // );
-            },
-            separatorBuilder: (_, __) => const Divider(),
-            itemCount: 10,
+            return RefreshIndicator(
+              onRefresh: () async {},
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                itemBuilder: (context, index) {
+                  final chat = chats[index];
+
+                  return ChatListItem(
+                    key: ValueKey(chat.id),
+                    chat: chat,
+                    currentUser: currentUser,
+                    onTap: (chat) {
+                      vLog(chat);
+                      context.router.push(const ChatRoute());
+                    },
+                  );
+                },
+                separatorBuilder: (_, __) => const Divider(),
+                itemCount: chats.length,
+              ),
+            );
+          },
+          error: (_) => Center(
+            child: Text(
+              _.failure.message ?? "Unknown error",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ),
         ),
       ),

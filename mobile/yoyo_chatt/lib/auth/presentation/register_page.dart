@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yoyo_chatt/routes/app_router.gr.dart';
 
+import '../../core/providers/core_providers.dart';
 import '../controller/auth_controller.dart';
 
 @RoutePage()
@@ -82,7 +83,7 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
             ),
           ),
           const SizedBox(height: 20),
-          if (_isLoading) const CircularProgressIndicator(),
+          if (_isLoading) const Center(child: CircularProgressIndicator()),
           if (!_isLoading)
             SizedBox(
               width: double.infinity,
@@ -112,6 +113,9 @@ class _RegisterFormState extends ConsumerState<RegisterForm> {
                       setState(() {
                         _isLoading = false;
                       });
+                      ref
+                          .read(currentUserProvider.notifier)
+                          .update((state) => r);
                       context.router.replaceAll([const ChatListRoute()]);
                     },
                   );

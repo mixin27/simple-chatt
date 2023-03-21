@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'chat_model.dart';
+part of 'chat_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-ChatEntity _$ChatEntityFromJson(Map<String, dynamic> json) {
-  return _ChatEntity.fromJson(json);
+ChatDto _$ChatDtoFromJson(Map<String, dynamic> json) {
+  return _ChatDto.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ChatEntity {
+mixin _$ChatDto {
   @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
@@ -34,15 +34,13 @@ mixin _$ChatEntity {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ChatEntityCopyWith<ChatEntity> get copyWith =>
-      throw _privateConstructorUsedError;
+  $ChatDtoCopyWith<ChatDto> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ChatEntityCopyWith<$Res> {
-  factory $ChatEntityCopyWith(
-          ChatEntity value, $Res Function(ChatEntity) then) =
-      _$ChatEntityCopyWithImpl<$Res, ChatEntity>;
+abstract class $ChatDtoCopyWith<$Res> {
+  factory $ChatDtoCopyWith(ChatDto value, $Res Function(ChatDto) then) =
+      _$ChatDtoCopyWithImpl<$Res, ChatDto>;
   @useResult
   $Res call(
       {@JsonKey(name: "_id") String id,
@@ -57,9 +55,9 @@ abstract class $ChatEntityCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChatEntityCopyWithImpl<$Res, $Val extends ChatEntity>
-    implements $ChatEntityCopyWith<$Res> {
-  _$ChatEntityCopyWithImpl(this._value, this._then);
+class _$ChatDtoCopyWithImpl<$Res, $Val extends ChatDto>
+    implements $ChatDtoCopyWith<$Res> {
+  _$ChatDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -123,11 +121,10 @@ class _$ChatEntityCopyWithImpl<$Res, $Val extends ChatEntity>
 }
 
 /// @nodoc
-abstract class _$$_ChatEntityCopyWith<$Res>
-    implements $ChatEntityCopyWith<$Res> {
-  factory _$$_ChatEntityCopyWith(
-          _$_ChatEntity value, $Res Function(_$_ChatEntity) then) =
-      __$$_ChatEntityCopyWithImpl<$Res>;
+abstract class _$$_ChatDtoCopyWith<$Res> implements $ChatDtoCopyWith<$Res> {
+  factory _$$_ChatDtoCopyWith(
+          _$_ChatDto value, $Res Function(_$_ChatDto) then) =
+      __$$_ChatDtoCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -144,11 +141,10 @@ abstract class _$$_ChatEntityCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ChatEntityCopyWithImpl<$Res>
-    extends _$ChatEntityCopyWithImpl<$Res, _$_ChatEntity>
-    implements _$$_ChatEntityCopyWith<$Res> {
-  __$$_ChatEntityCopyWithImpl(
-      _$_ChatEntity _value, $Res Function(_$_ChatEntity) _then)
+class __$$_ChatDtoCopyWithImpl<$Res>
+    extends _$ChatDtoCopyWithImpl<$Res, _$_ChatDto>
+    implements _$$_ChatDtoCopyWith<$Res> {
+  __$$_ChatDtoCopyWithImpl(_$_ChatDto _value, $Res Function(_$_ChatDto) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -162,7 +158,7 @@ class __$$_ChatEntityCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
-    return _then(_$_ChatEntity(
+    return _then(_$_ChatDto(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -197,8 +193,8 @@ class __$$_ChatEntityCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ChatEntity implements _ChatEntity {
-  const _$_ChatEntity(
+class _$_ChatDto extends _ChatDto {
+  const _$_ChatDto(
       {@JsonKey(name: "_id") required this.id,
       required this.name,
       @JsonKey(name: "is_group_chat") required this.isGroupChat,
@@ -206,10 +202,11 @@ class _$_ChatEntity implements _ChatEntity {
       @JsonKey(name: "group_admin") this.groupAdmin,
       required this.createdAt,
       required this.updatedAt})
-      : _users = users;
+      : _users = users,
+        super._();
 
-  factory _$_ChatEntity.fromJson(Map<String, dynamic> json) =>
-      _$$_ChatEntityFromJson(json);
+  factory _$_ChatDto.fromJson(Map<String, dynamic> json) =>
+      _$$_ChatDtoFromJson(json);
 
   @override
   @JsonKey(name: "_id")
@@ -238,14 +235,14 @@ class _$_ChatEntity implements _ChatEntity {
 
   @override
   String toString() {
-    return 'ChatEntity(id: $id, name: $name, isGroupChat: $isGroupChat, users: $users, groupAdmin: $groupAdmin, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ChatDto(id: $id, name: $name, isGroupChat: $isGroupChat, users: $users, groupAdmin: $groupAdmin, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ChatEntity &&
+            other is _$_ChatDto &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.isGroupChat, isGroupChat) ||
@@ -274,29 +271,29 @@ class _$_ChatEntity implements _ChatEntity {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ChatEntityCopyWith<_$_ChatEntity> get copyWith =>
-      __$$_ChatEntityCopyWithImpl<_$_ChatEntity>(this, _$identity);
+  _$$_ChatDtoCopyWith<_$_ChatDto> get copyWith =>
+      __$$_ChatDtoCopyWithImpl<_$_ChatDto>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChatEntityToJson(
+    return _$$_ChatDtoToJson(
       this,
     );
   }
 }
 
-abstract class _ChatEntity implements ChatEntity {
-  const factory _ChatEntity(
+abstract class _ChatDto extends ChatDto {
+  const factory _ChatDto(
       {@JsonKey(name: "_id") required final String id,
       required final String name,
       @JsonKey(name: "is_group_chat") required final bool isGroupChat,
       @JsonKey(defaultValue: []) final List<UserEntity> users,
       @JsonKey(name: "group_admin") final UserEntity? groupAdmin,
       required final String createdAt,
-      required final String updatedAt}) = _$_ChatEntity;
+      required final String updatedAt}) = _$_ChatDto;
+  const _ChatDto._() : super._();
 
-  factory _ChatEntity.fromJson(Map<String, dynamic> json) =
-      _$_ChatEntity.fromJson;
+  factory _ChatDto.fromJson(Map<String, dynamic> json) = _$_ChatDto.fromJson;
 
   @override
   @JsonKey(name: "_id")
@@ -318,6 +315,6 @@ abstract class _ChatEntity implements ChatEntity {
   String get updatedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_ChatEntityCopyWith<_$_ChatEntity> get copyWith =>
+  _$$_ChatDtoCopyWith<_$_ChatDto> get copyWith =>
       throw _privateConstructorUsedError;
 }

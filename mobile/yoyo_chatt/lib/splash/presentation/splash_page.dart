@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yoyo_chatt/auth/controller/auth_controller.dart';
+import 'package:yoyo_chatt/core/providers/core_providers.dart';
 import 'package:yoyo_chatt/core/utils/logger.dart';
 import 'package:yoyo_chatt/routes/app_router.gr.dart';
 
@@ -31,8 +32,10 @@ class _SplashPageState extends ConsumerState<SplashPage> {
       if (!mounted) return;
 
       if (authData != null) {
+        ref.read(currentUserProvider.notifier).update((state) => authData);
         context.router.replaceAll(const [ChatListRoute()]);
       } else {
+        ref.read(currentUserProvider.notifier).update((state) => null);
         context.router.replaceAll(const [LoginRoute()]);
       }
 

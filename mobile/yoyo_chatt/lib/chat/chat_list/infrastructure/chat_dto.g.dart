@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'chat_model.dart';
+part of 'chat_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ChatEntity _$$_ChatEntityFromJson(Map<String, dynamic> json) =>
-    _$_ChatEntity(
+_$_ChatDto _$$_ChatDtoFromJson(Map<String, dynamic> json) => _$_ChatDto(
       id: json['_id'] as String,
       name: json['name'] as String,
       isGroupChat: json['is_group_chat'] as bool,
@@ -22,7 +21,7 @@ _$_ChatEntity _$$_ChatEntityFromJson(Map<String, dynamic> json) =>
       updatedAt: json['updatedAt'] as String,
     );
 
-Map<String, dynamic> _$$_ChatEntityToJson(_$_ChatEntity instance) =>
+Map<String, dynamic> _$$_ChatDtoToJson(_$_ChatDto instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'name': instance.name,

@@ -4,6 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yoyo_chatt/auth/controller/auth_controller.dart';
 import 'package:yoyo_chatt/routes/app_router.gr.dart';
 
+import '../../core/providers/core_providers.dart';
+
 @RoutePage()
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -78,7 +80,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
             ),
           ),
           const SizedBox(height: 20),
-          if (_isLoading) const CircularProgressIndicator(),
+          if (_isLoading) const Center(child: CircularProgressIndicator()),
           if (!_isLoading)
             SizedBox(
               width: double.infinity,
@@ -107,6 +109,9 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                       setState(() {
                         _isLoading = false;
                       });
+                      ref
+                          .read(currentUserProvider.notifier)
+                          .update((state) => r);
                       context.router.replaceAll([const ChatListRoute()]);
                     },
                   );
