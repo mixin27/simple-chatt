@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:yoyo_chatt/chat/chat_list/infrastructure/chat_dto.dart';
 import 'package:yoyo_chatt/chat/chat_list/infrastructure/requests/create_chat_request.dart';
@@ -27,9 +29,16 @@ class ChatRemoteService {
 
   Future<AppResponse<ChatDto?>> createGroupOrAccessChat(
       CreateGroupChatRequest request) async {
+    final payload = {
+      "name": request.name,
+      "users": jsonEncode([
+        ...request.users,
+      ]),
+    };
+
     final response = await _dioClient.post(
       Endpoints.createGroupOrAccessChat,
-      data: request.toJson(),
+      data: payload,
     );
 
     return AppResponse.fromJson(

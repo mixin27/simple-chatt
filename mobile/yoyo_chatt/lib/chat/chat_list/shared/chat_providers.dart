@@ -44,3 +44,7 @@ final userListProvider = StateProvider<List<UserEntity>>((ref) {
 final selectedUserIdListProvider = StateProvider<List<String>>((ref) {
   return [];
 });
+
+final selectedUsersListProvider = StateProvider<List<UserEntity>>((ref) {
+  return [];
+});

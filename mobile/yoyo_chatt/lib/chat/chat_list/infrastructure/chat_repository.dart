@@ -21,7 +21,7 @@ class ChatRepository {
       return right(response.data!.toDomainList());
     }
 
-    return left(ChatFailure.api(response.statusCode, response.statusMessage));
+    return left(ChatFailure.api(response.statusCode, response.message));
   }
 
   Future<Either<ChatFailure, ChatEntity>> createGroupOrAccessChat({
@@ -36,7 +36,7 @@ class ChatRepository {
       return right(response.data!.toDomain());
     }
 
-    return left(ChatFailure.api(response.statusCode, response.statusMessage));
+    return left(ChatFailure.api(response.statusCode, response.message));
   }
 
   Future<Either<ChatFailure, ChatEntity>> createOrAccessChat({
@@ -50,6 +50,6 @@ class ChatRepository {
       return right(response.data!.toDomain());
     }
 
-    return left(ChatFailure.api(response.statusCode, response.statusMessage));
+    return left(ChatFailure.api(response.statusCode, response.message));
   }
 }
