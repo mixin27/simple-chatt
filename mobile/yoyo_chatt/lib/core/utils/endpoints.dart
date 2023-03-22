@@ -18,4 +18,9 @@ class Endpoints {
   static const renameGroup = "$_baseChat/group/rename";
   static const addUserToGroup = "$_baseChat/group/adduser";
   static const removeUserFromGroup = "$_baseChat/group/removeuser";
+
+  // Chat message
+  static const _baseChatMessage = "$_apiVersion/message";
+
+  static const message = _baseChatMessage;
 }

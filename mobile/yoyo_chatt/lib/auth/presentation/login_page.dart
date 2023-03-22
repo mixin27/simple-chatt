@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -55,12 +57,25 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (_errorMessage != null)
-            Text(
-              _errorMessage!,
-              style: Theme.of(context).textTheme.titleMedium,
+          if (_errorMessage != null) ...[
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.errorContainer,
+                border: Border.all(
+                  width: 1,
+                  color: Theme.of(context).colorScheme.error,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                _errorMessage!,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
-          const SizedBox(height: 20),
+            const SizedBox(height: 20),
+          ],
           TextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
@@ -103,6 +118,13 @@ class _LoginFormState extends ConsumerState<LoginForm> {
                           orElse: () => "Unknown error",
                           server: (_) => _.message,
                         );
+                      });
+
+                      Future.delayed(const Duration(milliseconds: 5000))
+                          .then((value) {
+                        setState(() {
+                          _errorMessage = null;
+                        });
                       });
                     },
                     (r) {

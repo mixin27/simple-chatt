@@ -4,7 +4,6 @@ import 'package:yoyo_chatt/chat/chat_list/infrastructure/extensions.dart';
 import 'package:yoyo_chatt/chat/chat_list/infrastructure/requests/create_chat_request.dart';
 import 'package:yoyo_chatt/chat/chat_list/infrastructure/requests/create_group_chat_request.dart';
 import 'package:yoyo_chatt/chat/core/domain/chat_failure.dart';
-import 'package:yoyo_chatt/core/utils/logger.dart';
 
 import '../domain/chat_model.dart';
 

@@ -15,11 +15,11 @@ import 'package:yoyo_chatt/auth/presentation/register_page.dart' as _i2;
 import 'package:yoyo_chatt/chat/chat_list/presentation/chat_list_page.dart'
     as _i3;
 import 'package:yoyo_chatt/chat/chat_list/presentation/new_group_page.dart'
-    as _i7;
-import 'package:yoyo_chatt/chat/chat_message/presentation/chat_page.dart'
     as _i4;
-import 'package:yoyo_chatt/home/presentation/home_page.dart' as _i5;
-import 'package:yoyo_chatt/splash/presentation/splash_page.dart' as _i6;
+import 'package:yoyo_chatt/chat/chat_message/presentation/chat_page.dart'
+    as _i5;
+import 'package:yoyo_chatt/home/presentation/home_page.dart' as _i6;
+import 'package:yoyo_chatt/splash/presentation/splash_page.dart' as _i7;
 
 abstract class $AppRouter extends _i8.RootStackRouter {
   $AppRouter([_i9.GlobalKey<_i9.NavigatorState>? navigatorKey])
@@ -45,28 +45,28 @@ abstract class $AppRouter extends _i8.RootStackRouter {
         child: const _i3.ChatListPage(),
       );
     },
+    NewGroupRoute.name: (routeData) {
+      return _i8.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i4.NewGroupPage(),
+      );
+    },
     ChatRoute.name: (routeData) {
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.ChatPage(),
+        child: const _i5.ChatPage(),
       );
     },
     HomeRoute.name: (routeData) {
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i5.HomePage(),
+        child: const _i6.HomePage(),
       );
     },
     SplashRoute.name: (routeData) {
       return _i8.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.SplashPage(),
-      );
-    },
-    NewGroupRoute.name: (routeData) {
-      return _i8.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i7.NewGroupPage(),
+        child: const _i7.SplashPage(),
       );
     },
   };
@@ -115,7 +115,21 @@ class ChatListRoute extends _i8.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.ChatPage]
+/// [_i4.NewGroupPage]
+class NewGroupRoute extends _i8.PageRouteInfo<void> {
+  const NewGroupRoute({List<_i8.PageRouteInfo>? children})
+      : super(
+          NewGroupRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NewGroupRoute';
+
+  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i5.ChatPage]
 class ChatRoute extends _i8.PageRouteInfo<void> {
   const ChatRoute({List<_i8.PageRouteInfo>? children})
       : super(
@@ -129,7 +143,7 @@ class ChatRoute extends _i8.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.HomePage]
+/// [_i6.HomePage]
 class HomeRoute extends _i8.PageRouteInfo<void> {
   const HomeRoute({List<_i8.PageRouteInfo>? children})
       : super(
@@ -143,7 +157,7 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.SplashPage]
+/// [_i7.SplashPage]
 class SplashRoute extends _i8.PageRouteInfo<void> {
   const SplashRoute({List<_i8.PageRouteInfo>? children})
       : super(
@@ -152,20 +166,6 @@ class SplashRoute extends _i8.PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
-
-  static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
-}
-
-/// generated route for
-/// [_i7.NewGroupPage]
-class NewGroupRoute extends _i8.PageRouteInfo<void> {
-  const NewGroupRoute({List<_i8.PageRouteInfo>? children})
-      : super(
-          NewGroupRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'NewGroupRoute';
 
   static const _i8.PageInfo<void> page = _i8.PageInfo<void>(name);
 }
