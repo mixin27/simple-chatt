@@ -29,7 +29,11 @@ const accessChat = asyncHandler(async (req, res) => {
   });
 
   if (isChat.length > 0) {
-    res.send(isChat[0]);
+    res.send({
+      data: isChat[0],
+      success: true,
+      message: "success",
+    });
   } else {
     var chatData = {
       name: "sender",
@@ -45,7 +49,7 @@ const accessChat = asyncHandler(async (req, res) => {
         "-password"
       );
 
-      res.status(200).send({
+      res.status(200).json({
         data: fullChat,
         success: true,
         message: "success",
@@ -73,7 +77,7 @@ const fetchChats = asyncHandler(async (req, res) => {
           select: "name avatar email",
         });
 
-        res.status(200).send({
+        res.status(200).json({
           data: results,
           success: true,
           message: "success",

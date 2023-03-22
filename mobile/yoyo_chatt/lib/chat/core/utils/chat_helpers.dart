@@ -11,4 +11,10 @@ class ChatHelpers {
       UserEntity currentUser, List<UserEntity> chatUsers) {
     return chatUsers[0].id == currentUser.id ? chatUsers[1] : chatUsers[0];
   }
+
+  static bool isSameUser() => false;
+
+  static bool isSameSender() => false;
+
+  static bool isLastMessage() => false;
 }

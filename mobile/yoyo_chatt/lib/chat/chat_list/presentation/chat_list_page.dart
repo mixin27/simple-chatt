@@ -24,6 +24,28 @@ class ChatListPage extends HookConsumerWidget {
 
     if (currentUser == null) return const SizedBox();
 
+    ref.listen(createOrAccessChatProvider, (previous, next) {
+      next.maybeMap(
+        orElse: () {},
+        loading: (_) {
+          dLog("Creating or accessing chat...");
+        },
+        success: (_) {
+          ref.read(selectedChatProvider.notifier).update((state) => _.chat);
+          context.router.push(const ChatRoute());
+        },
+        error: (_) {
+          eLog(_.failure.message ?? "Unknown error occurred.");
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                  _.failure.message ?? "Error on creating or accessing chat."),
+            ),
+          );
+        },
+      );
+    });
+
     return StartUpContainer(
       onInit: () {
         ref.read(getChatsNotifierProvider.notifier).getAllChats();
@@ -100,7 +122,9 @@ class ChatListPage extends HookConsumerWidget {
             final chats = _.chats;
 
             return RefreshIndicator(
-              onRefresh: () async {},
+              onRefresh: () async {
+                ref.read(getChatsNotifierProvider.notifier).getAllChats();
+              },
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 itemBuilder: (context, index) {
@@ -182,10 +206,14 @@ class ChatListPage extends HookConsumerWidget {
           subtitle: Text(user.email),
           onTap: () {
             /// selected user
-            ref.read(selectedChatUserProvider.notifier).update((state) => user);
+            // ref.read(selectedChatUserProvider.notifier).update((state) => user);
+
+            ref
+                .read(createOrAccessChatProvider.notifier)
+                .createOrAccessChat(userId: user.id);
 
             /// push to chat screen
-            context.router.push(const ChatRoute());
+            // context.router.push(const ChatRoute());
           },
         ),
       ),

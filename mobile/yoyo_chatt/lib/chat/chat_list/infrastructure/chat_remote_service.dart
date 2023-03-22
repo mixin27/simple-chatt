@@ -6,6 +6,7 @@ import 'package:yoyo_chatt/chat/chat_list/infrastructure/requests/create_chat_re
 import 'package:yoyo_chatt/chat/chat_list/infrastructure/requests/create_group_chat_request.dart';
 import 'package:yoyo_chatt/core/http/dio_client.dart';
 import 'package:yoyo_chatt/core/models/app_response.dart';
+import 'package:yoyo_chatt/core/utils/logger.dart';
 
 import '../../../core/utils/endpoints.dart';
 
