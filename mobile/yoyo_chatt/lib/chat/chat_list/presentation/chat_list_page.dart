@@ -6,10 +6,12 @@ import 'package:yoyo_chatt/auth/controller/auth_controller.dart';
 import 'package:yoyo_chatt/auth/models/credential.dart';
 import 'package:yoyo_chatt/chat/chat_list/domain/chat_model.dart';
 import 'package:yoyo_chatt/chat/chat_list/shared/chat_providers.dart';
+import 'package:yoyo_chatt/chat/core/utils/chat_helpers.dart';
 import 'package:yoyo_chatt/core/providers/core_providers.dart';
 import 'package:yoyo_chatt/core/utils/logger.dart';
 import 'package:yoyo_chatt/core/widgets/startup_container.dart';
 import 'package:yoyo_chatt/routes/app_router.gr.dart';
+import 'package:yoyo_chatt/user/shared/user_providers.dart';
 
 @RoutePage()
 class ChatListPage extends HookConsumerWidget {
@@ -25,6 +27,7 @@ class ChatListPage extends HookConsumerWidget {
     return StartUpContainer(
       onInit: () {
         ref.read(getChatsNotifierProvider.notifier).getAllChats();
+        ref.read(getUsersNotifierProvider.notifier).getAllUsers();
       },
       child: Scaffold(
         appBar: AppBar(
@@ -79,7 +82,7 @@ class ChatListPage extends HookConsumerWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _showSearch(context, []),
+          onPressed: () => _showSearch(context, ref),
           child: const Icon(Icons.message),
         ),
         body: chatsState.map(
@@ -108,7 +111,9 @@ class ChatListPage extends HookConsumerWidget {
                     chat: chat,
                     currentUser: currentUser,
                     onTap: (chat) {
-                      vLog(chat);
+                      ref
+                          .read(selectedChatProvider.notifier)
+                          .update((state) => chat);
                       context.router.push(const ChatRoute());
                     },
                   );
@@ -129,7 +134,9 @@ class ChatListPage extends HookConsumerWidget {
     );
   }
 
-  void _showSearch(BuildContext context, List<UserEntity> users) {
+  void _showSearch(BuildContext context, WidgetRef ref) {
+    final users = ref.watch(userListProvider);
+
     showSearch(
       context: context,
       delegate: SearchPage<UserEntity>(
@@ -175,7 +182,7 @@ class ChatListPage extends HookConsumerWidget {
           subtitle: Text(user.email),
           onTap: () {
             /// selected user
-            // context.read<ChatBloc>().add(UserSelected(user));
+            ref.read(selectedChatUserProvider.notifier).update((state) => user);
 
             /// push to chat screen
             context.router.push(const ChatRoute());
@@ -202,7 +209,11 @@ class ChatListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: const Icon(Icons.account_circle, size: 50.0),
-      title: Text(chat.name),
+      title: Text(
+        chat.isGroupChat
+            ? chat.name
+            : ChatHelpers.getSender(currentUser, chat.users),
+      ),
       onTap: () => onTap(chat),
     );
   }
