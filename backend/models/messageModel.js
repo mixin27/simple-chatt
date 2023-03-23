@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import mongooseAutoPopulate from "mongoose-autopopulate";
+// import mongooseAutoPopulate from "mongoose-autopopulate";
 
 const messageSchema = new mongoose.Schema(
   {
@@ -20,7 +20,7 @@ const messageSchema = new mongoose.Schema(
   }
 );
 
-messageSchema.plugin(mongooseAutoPopulate);
+// messageSchema.plugin(mongooseAutoPopulate);
 
 const Message = mongoose.model("Message", messageSchema);
 

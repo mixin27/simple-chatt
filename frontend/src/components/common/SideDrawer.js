@@ -75,14 +75,14 @@ const SideDrawer = () => {
 
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.data.token}`,
         },
       };
 
       const { data } = await axios.get(`/api/user?search=${search}`, config);
 
       setLoading(false);
-      setSearchResult(data);
+      setSearchResult(data.data);
     } catch (err) {
       toast({
         title: err.message || "Error occurred!",
@@ -103,7 +103,7 @@ const SideDrawer = () => {
       const config = {
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.data.token}`,
         },
       };
 
@@ -111,7 +111,7 @@ const SideDrawer = () => {
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
 
-      setSelectedChat(data);
+      setSelectedChat(data.data);
       setLoadingChat(false);
       onClose();
     } catch (err) {
@@ -170,7 +170,10 @@ const SideDrawer = () => {
                 >
                   {noti.chat.is_group_chat
                     ? `New Message in ${noti.chat.name}`
-                    : `New Message from ${getSender(user, noti.chat.users)}`}
+                    : `New Message from ${getSender(
+                        user.data.user,
+                        noti.chat.users
+                      )}`}
                 </MenuItem>
               ))}
             </MenuList>

@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:yoyo_chatt/auth/repository/auth_repository.dart';
 import 'package:yoyo_chatt/core/models/app_response.dart';
 
 class AppInterceptors extends Interceptor {
@@ -20,9 +22,15 @@ class AppInterceptors extends Interceptor {
     // Tries to add Authorization header only if Authorization header
     // not existed
     if (!options.headers.containsKey(HttpHeaders.authorizationHeader)) {
-      const token = "FakeToken";
+      final userRepository = AuthRepository(
+        secureStorage: const FlutterSecureStorage(),
+      );
+      final credential = await userRepository.read();
 
-      options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
+      if (credential != null) {
+        options.headers[HttpHeaders.authorizationHeader] =
+            'Bearer ${credential.token}';
+      }
     }
 
     return handler.next(options);

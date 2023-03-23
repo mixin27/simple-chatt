@@ -30,6 +30,6 @@ _$_Credential _$$_CredentialFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$_CredentialToJson(_$_Credential instance) =>
     <String, dynamic>{
-      'user': instance.user,
+      'user': instance.user.toJson(),
       'token': instance.token,
     };

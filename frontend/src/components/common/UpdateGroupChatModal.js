@@ -37,8 +37,8 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
 
   const removeUser = async (userToRemove) => {
     if (
-      selectedChat.group_admin._id !== user._id &&
-      userToRemove._id !== user._id
+      selectedChat.group_admin._id !== user.data._id &&
+      userToRemove._id !== user.data._id
     ) {
       toast({
         title: "Only admin can remove someone!",
@@ -68,7 +68,9 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         config
       );
 
-      userToRemove._id === user._id ? setSelectedChat() : setSelectedChat(data);
+      userToRemove._id === user.data._id
+        ? setSelectedChat()
+        : setSelectedChat(data.data);
       setFetchAgain(!fetchAgain);
       fetchMessages();
       setLoading(false);
@@ -106,7 +108,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         config
       );
 
-      setSelectedChat(data);
+      setSelectedChat(data.data);
       setFetchAgain(!fetchAgain);
       setRenameLoading(false);
     } catch (error) {
@@ -137,7 +139,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       return;
     }
 
-    if (selectedChat.group_admin._id !== user._id) {
+    if (selectedChat.group_admin._id !== user.data._id) {
       toast({
         title: "Only admin can add someone!",
         status: "error",
@@ -167,7 +169,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
         config
       );
 
-      setSelectedChat(data);
+      setSelectedChat(data.data);
       setFetchAgain(!fetchAgain);
       setLoading(false);
     } catch (error) {
@@ -207,7 +209,7 @@ const UpdateGroupChatModal = ({ fetchAgain, setFetchAgain, fetchMessages }) => {
       const { data } = await axios.get(`/api/user?search=${search}`, config);
 
       setLoading(false);
-      setSearchResult(data);
+      setSearchResult(data.data);
     } catch (err) {
       toast({
         title: err.message || "Error occurred!",

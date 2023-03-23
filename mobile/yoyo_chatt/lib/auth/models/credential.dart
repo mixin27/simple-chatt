@@ -1,3 +1,4 @@
+import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'credential.freezed.dart';
@@ -15,6 +16,14 @@ class UserEntity with _$UserEntity {
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>
       _$UserEntityFromJson(json);
+
+  ChatUser get toChatUser {
+    return ChatUser(
+      id: id,
+      firstName: name,
+      profileImage: avatar,
+    );
+  }
 }
 
 @freezed

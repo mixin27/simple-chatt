@@ -21,7 +21,7 @@ const sendMessage = asyncHandler(async (req, res) => {
   try {
     var message = await Message.create(newMessage);
 
-    message = await message.populate("sender", "name avatar");
+    message = await message.populate("sender", "name email avatar");
     message = await message.populate("chat");
     message = await User.populate(message, {
       path: "chat.users",
@@ -45,9 +45,22 @@ const sendMessage = asyncHandler(async (req, res) => {
 
 const allMessages = asyncHandler(async (req, res) => {
   try {
-    const messages = await Message.find({ chat: req.params.chatId })
+    var messages = await Message.find({ chat: req.params.chatId })
       .populate("sender", "name avatar email")
       .populate("chat");
+
+    messages = await User.populate(messages, {
+      path: "chat.users",
+      select: "name avatar email",
+    });
+
+    messages = await Message.populate(messages, {
+      path: "chat.latest_message",
+    });
+
+    messages = await User.populate(messages, {
+      path: "chat.group_admin",
+    });
 
     res.json({
       data: messages,
