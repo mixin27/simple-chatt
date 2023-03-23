@@ -90,7 +90,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
           config
         );
-        socket.emit("new message", data);
+        socket.emit("new message", data.data);
         setMessages([...messages, data.data]);
       } catch (error) {
         toast({
@@ -106,7 +106,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   };
   useEffect(() => {
     socket = io(ENDPOINT);
-    socket.emit("setup", user);
+    socket.emit("setup", user.data.user);
     socket.on("connected", () => setSocketConnected(true));
     socket.on("typing", () => setIsTyping(true));
     socket.on("stop typing", () => setIsTyping(false));
@@ -181,9 +181,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
             {messages &&
               (!selectedChat.isGroupChat ? (
                 <>
-                  {getSender(user.data, selectedChat.users)}
+                  {getSender(user.data.user, selectedChat.users)}
                   <ProfileModal
-                    user={getSenderFull(user.data, selectedChat.users)}
+                    user={getSenderFull(user.data.user, selectedChat.users)}
                   />
                 </>
               ) : (

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yoyo_chatt/auth/models/credential.dart';
+import 'package:yoyo_chatt/chat/chat_message/infrastructure/chat_message_dto.dart';
 
 import '../domain/chat_model.dart';
 
@@ -18,6 +19,7 @@ class ChatDto with _$ChatDto {
     @JsonKey(name: "group_admin") UserEntity? groupAdmin,
     required String createdAt,
     required String updatedAt,
+    @JsonKey(name: "latest_message") ChatMessageDto? latestMessage,
   }) = _ChatDto;
 
   factory ChatDto.fromJson(Map<String, dynamic> json) =>
@@ -30,5 +32,6 @@ class ChatDto with _$ChatDto {
         users: users,
         createdAt: createdAt,
         updatedAt: updatedAt,
+        latestMessage: latestMessage?.toDomain(),
       );
 }

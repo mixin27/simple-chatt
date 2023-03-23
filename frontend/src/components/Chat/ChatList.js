@@ -103,9 +103,10 @@ const ChatList = ({ fetchAgain }) => {
                 borderRadius="lg"
                 key={chat._id}
               >
+                {console.log(chat.users)}
                 <Text>
                   {!chat.is_group_chat
-                    ? getSender(loggedUser.data, chat.users)
+                    ? getSender(loggedUser.data.user, chat.users)
                     : chat.name}
                 </Text>
 

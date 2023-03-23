@@ -21,7 +21,7 @@ mixin _$ChatMessageEntity {
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
   UserEntity get sender => throw _privateConstructorUsedError;
-  ChatEntity get chat => throw _privateConstructorUsedError;
+  dynamic get chat => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatMessageEntityCopyWith<ChatMessageEntity> get copyWith =>
@@ -40,10 +40,9 @@ abstract class $ChatMessageEntityCopyWith<$Res> {
       String createdAt,
       String updatedAt,
       UserEntity sender,
-      ChatEntity chat});
+      dynamic chat});
 
   $UserEntityCopyWith<$Res> get sender;
-  $ChatEntityCopyWith<$Res> get chat;
 }
 
 /// @nodoc
@@ -64,7 +63,7 @@ class _$ChatMessageEntityCopyWithImpl<$Res, $Val extends ChatMessageEntity>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? sender = null,
-    Object? chat = null,
+    Object? chat = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -87,10 +86,10 @@ class _$ChatMessageEntityCopyWithImpl<$Res, $Val extends ChatMessageEntity>
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
               as UserEntity,
-      chat: null == chat
+      chat: freezed == chat
           ? _value.chat
           : chat // ignore: cast_nullable_to_non_nullable
-              as ChatEntity,
+              as dynamic,
     ) as $Val);
   }
 
@@ -99,14 +98,6 @@ class _$ChatMessageEntityCopyWithImpl<$Res, $Val extends ChatMessageEntity>
   $UserEntityCopyWith<$Res> get sender {
     return $UserEntityCopyWith<$Res>(_value.sender, (value) {
       return _then(_value.copyWith(sender: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ChatEntityCopyWith<$Res> get chat {
-    return $ChatEntityCopyWith<$Res>(_value.chat, (value) {
-      return _then(_value.copyWith(chat: value) as $Val);
     });
   }
 }
@@ -125,12 +116,10 @@ abstract class _$$_ChatMessageEntityCopyWith<$Res>
       String createdAt,
       String updatedAt,
       UserEntity sender,
-      ChatEntity chat});
+      dynamic chat});
 
   @override
   $UserEntityCopyWith<$Res> get sender;
-  @override
-  $ChatEntityCopyWith<$Res> get chat;
 }
 
 /// @nodoc
@@ -149,7 +138,7 @@ class __$$_ChatMessageEntityCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? sender = null,
-    Object? chat = null,
+    Object? chat = freezed,
   }) {
     return _then(_$_ChatMessageEntity(
       id: null == id
@@ -172,10 +161,10 @@ class __$$_ChatMessageEntityCopyWithImpl<$Res>
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
               as UserEntity,
-      chat: null == chat
+      chat: freezed == chat
           ? _value.chat
           : chat // ignore: cast_nullable_to_non_nullable
-              as ChatEntity,
+              as dynamic,
     ));
   }
 }
@@ -189,7 +178,7 @@ class _$_ChatMessageEntity extends _ChatMessageEntity {
       required this.createdAt,
       required this.updatedAt,
       required this.sender,
-      required this.chat})
+      this.chat})
       : super._();
 
   @override
@@ -203,7 +192,7 @@ class _$_ChatMessageEntity extends _ChatMessageEntity {
   @override
   final UserEntity sender;
   @override
-  final ChatEntity chat;
+  final dynamic chat;
 
   @override
   String toString() {
@@ -222,12 +211,12 @@ class _$_ChatMessageEntity extends _ChatMessageEntity {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.sender, sender) || other.sender == sender) &&
-            (identical(other.chat, chat) || other.chat == chat));
+            const DeepCollectionEquality().equals(other.chat, chat));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, content, createdAt, updatedAt, sender, chat);
+  int get hashCode => Object.hash(runtimeType, id, content, createdAt,
+      updatedAt, sender, const DeepCollectionEquality().hash(chat));
 
   @JsonKey(ignore: true)
   @override
@@ -244,7 +233,7 @@ abstract class _ChatMessageEntity extends ChatMessageEntity {
       required final String createdAt,
       required final String updatedAt,
       required final UserEntity sender,
-      required final ChatEntity chat}) = _$_ChatMessageEntity;
+      final dynamic chat}) = _$_ChatMessageEntity;
   const _ChatMessageEntity._() : super._();
 
   @override
@@ -258,7 +247,7 @@ abstract class _ChatMessageEntity extends ChatMessageEntity {
   @override
   UserEntity get sender;
   @override
-  ChatEntity get chat;
+  dynamic get chat;
   @override
   @JsonKey(ignore: true)
   _$$_ChatMessageEntityCopyWith<_$_ChatMessageEntity> get copyWith =>

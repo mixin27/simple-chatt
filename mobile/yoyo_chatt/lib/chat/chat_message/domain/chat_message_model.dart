@@ -16,7 +16,7 @@ class ChatMessageEntity with _$ChatMessageEntity {
     required String createdAt,
     required String updatedAt,
     required UserEntity sender,
-    required ChatEntity chat,
+    dynamic chat,
   }) = _ChatMessageEntity;
 
   ChatMessage get toChatMessage {

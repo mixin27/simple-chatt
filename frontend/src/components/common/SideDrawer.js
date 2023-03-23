@@ -75,7 +75,7 @@ const SideDrawer = () => {
 
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.data.token}`,
         },
       };
 
@@ -103,7 +103,7 @@ const SideDrawer = () => {
       const config = {
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${user.data.token}`,
         },
       };
 
@@ -171,7 +171,7 @@ const SideDrawer = () => {
                   {noti.chat.is_group_chat
                     ? `New Message in ${noti.chat.name}`
                     : `New Message from ${getSender(
-                        user.data,
+                        user.data.user,
                         noti.chat.users
                       )}`}
                 </MenuItem>

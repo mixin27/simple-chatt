@@ -13,7 +13,7 @@ _$_ChatMessageDto _$$_ChatMessageDtoFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
       sender: UserEntity.fromJson(json['sender'] as Map<String, dynamic>),
-      chat: ChatDto.fromJson(json['chat'] as Map<String, dynamic>),
+      chat: json['chat'],
     );
 
 Map<String, dynamic> _$$_ChatMessageDtoToJson(_$_ChatMessageDto instance) =>
@@ -23,5 +23,5 @@ Map<String, dynamic> _$$_ChatMessageDtoToJson(_$_ChatMessageDto instance) =>
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
       'sender': instance.sender.toJson(),
-      'chat': instance.chat.toJson(),
+      'chat': instance.chat,
     };

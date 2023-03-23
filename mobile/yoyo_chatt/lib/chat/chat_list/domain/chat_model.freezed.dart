@@ -23,6 +23,7 @@ mixin _$ChatEntity {
   UserEntity? get groupAdmin => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
+  ChatMessageEntity? get latestMessage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ChatEntityCopyWith<ChatEntity> get copyWith =>
@@ -42,9 +43,11 @@ abstract class $ChatEntityCopyWith<$Res> {
       List<UserEntity> users,
       UserEntity? groupAdmin,
       String createdAt,
-      String updatedAt});
+      String updatedAt,
+      ChatMessageEntity? latestMessage});
 
   $UserEntityCopyWith<$Res>? get groupAdmin;
+  $ChatMessageEntityCopyWith<$Res>? get latestMessage;
 }
 
 /// @nodoc
@@ -67,6 +70,7 @@ class _$ChatEntityCopyWithImpl<$Res, $Val extends ChatEntity>
     Object? groupAdmin = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? latestMessage = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -97,6 +101,10 @@ class _$ChatEntityCopyWithImpl<$Res, $Val extends ChatEntity>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      latestMessage: freezed == latestMessage
+          ? _value.latestMessage
+          : latestMessage // ignore: cast_nullable_to_non_nullable
+              as ChatMessageEntity?,
     ) as $Val);
   }
 
@@ -109,6 +117,18 @@ class _$ChatEntityCopyWithImpl<$Res, $Val extends ChatEntity>
 
     return $UserEntityCopyWith<$Res>(_value.groupAdmin!, (value) {
       return _then(_value.copyWith(groupAdmin: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ChatMessageEntityCopyWith<$Res>? get latestMessage {
+    if (_value.latestMessage == null) {
+      return null;
+    }
+
+    return $ChatMessageEntityCopyWith<$Res>(_value.latestMessage!, (value) {
+      return _then(_value.copyWith(latestMessage: value) as $Val);
     });
   }
 }
@@ -128,10 +148,13 @@ abstract class _$$_ChatEntityCopyWith<$Res>
       List<UserEntity> users,
       UserEntity? groupAdmin,
       String createdAt,
-      String updatedAt});
+      String updatedAt,
+      ChatMessageEntity? latestMessage});
 
   @override
   $UserEntityCopyWith<$Res>? get groupAdmin;
+  @override
+  $ChatMessageEntityCopyWith<$Res>? get latestMessage;
 }
 
 /// @nodoc
@@ -152,6 +175,7 @@ class __$$_ChatEntityCopyWithImpl<$Res>
     Object? groupAdmin = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? latestMessage = freezed,
   }) {
     return _then(_$_ChatEntity(
       id: null == id
@@ -182,6 +206,10 @@ class __$$_ChatEntityCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      latestMessage: freezed == latestMessage
+          ? _value.latestMessage
+          : latestMessage // ignore: cast_nullable_to_non_nullable
+              as ChatMessageEntity?,
     ));
   }
 }
@@ -196,7 +224,8 @@ class _$_ChatEntity extends _ChatEntity {
       final List<UserEntity> users = const [],
       this.groupAdmin,
       required this.createdAt,
-      required this.updatedAt})
+      required this.updatedAt,
+      this.latestMessage})
       : _users = users,
         super._();
 
@@ -221,10 +250,12 @@ class _$_ChatEntity extends _ChatEntity {
   final String createdAt;
   @override
   final String updatedAt;
+  @override
+  final ChatMessageEntity? latestMessage;
 
   @override
   String toString() {
-    return 'ChatEntity(id: $id, name: $name, isGroupChat: $isGroupChat, users: $users, groupAdmin: $groupAdmin, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ChatEntity(id: $id, name: $name, isGroupChat: $isGroupChat, users: $users, groupAdmin: $groupAdmin, createdAt: $createdAt, updatedAt: $updatedAt, latestMessage: $latestMessage)';
   }
 
   @override
@@ -242,7 +273,9 @@ class _$_ChatEntity extends _ChatEntity {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.latestMessage, latestMessage) ||
+                other.latestMessage == latestMessage));
   }
 
   @override
@@ -254,7 +287,8 @@ class _$_ChatEntity extends _ChatEntity {
       const DeepCollectionEquality().hash(_users),
       groupAdmin,
       createdAt,
-      updatedAt);
+      updatedAt,
+      latestMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -271,7 +305,8 @@ abstract class _ChatEntity extends ChatEntity {
       final List<UserEntity> users,
       final UserEntity? groupAdmin,
       required final String createdAt,
-      required final String updatedAt}) = _$_ChatEntity;
+      required final String updatedAt,
+      final ChatMessageEntity? latestMessage}) = _$_ChatEntity;
   const _ChatEntity._() : super._();
 
   @override
@@ -288,6 +323,8 @@ abstract class _ChatEntity extends ChatEntity {
   String get createdAt;
   @override
   String get updatedAt;
+  @override
+  ChatMessageEntity? get latestMessage;
   @override
   @JsonKey(ignore: true)
   _$$_ChatEntityCopyWith<_$_ChatEntity> get copyWith =>

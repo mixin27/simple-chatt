@@ -31,6 +31,8 @@ mixin _$ChatDto {
   UserEntity? get groupAdmin => throw _privateConstructorUsedError;
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: "latest_message")
+  ChatMessageDto? get latestMessage => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -49,9 +51,11 @@ abstract class $ChatDtoCopyWith<$Res> {
       @JsonKey(defaultValue: []) List<UserEntity> users,
       @JsonKey(name: "group_admin") UserEntity? groupAdmin,
       String createdAt,
-      String updatedAt});
+      String updatedAt,
+      @JsonKey(name: "latest_message") ChatMessageDto? latestMessage});
 
   $UserEntityCopyWith<$Res>? get groupAdmin;
+  $ChatMessageDtoCopyWith<$Res>? get latestMessage;
 }
 
 /// @nodoc
@@ -74,6 +78,7 @@ class _$ChatDtoCopyWithImpl<$Res, $Val extends ChatDto>
     Object? groupAdmin = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? latestMessage = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -104,6 +109,10 @@ class _$ChatDtoCopyWithImpl<$Res, $Val extends ChatDto>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      latestMessage: freezed == latestMessage
+          ? _value.latestMessage
+          : latestMessage // ignore: cast_nullable_to_non_nullable
+              as ChatMessageDto?,
     ) as $Val);
   }
 
@@ -116,6 +125,18 @@ class _$ChatDtoCopyWithImpl<$Res, $Val extends ChatDto>
 
     return $UserEntityCopyWith<$Res>(_value.groupAdmin!, (value) {
       return _then(_value.copyWith(groupAdmin: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $ChatMessageDtoCopyWith<$Res>? get latestMessage {
+    if (_value.latestMessage == null) {
+      return null;
+    }
+
+    return $ChatMessageDtoCopyWith<$Res>(_value.latestMessage!, (value) {
+      return _then(_value.copyWith(latestMessage: value) as $Val);
     });
   }
 }
@@ -134,10 +155,13 @@ abstract class _$$_ChatDtoCopyWith<$Res> implements $ChatDtoCopyWith<$Res> {
       @JsonKey(defaultValue: []) List<UserEntity> users,
       @JsonKey(name: "group_admin") UserEntity? groupAdmin,
       String createdAt,
-      String updatedAt});
+      String updatedAt,
+      @JsonKey(name: "latest_message") ChatMessageDto? latestMessage});
 
   @override
   $UserEntityCopyWith<$Res>? get groupAdmin;
+  @override
+  $ChatMessageDtoCopyWith<$Res>? get latestMessage;
 }
 
 /// @nodoc
@@ -157,6 +181,7 @@ class __$$_ChatDtoCopyWithImpl<$Res>
     Object? groupAdmin = freezed,
     Object? createdAt = null,
     Object? updatedAt = null,
+    Object? latestMessage = freezed,
   }) {
     return _then(_$_ChatDto(
       id: null == id
@@ -187,6 +212,10 @@ class __$$_ChatDtoCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String,
+      latestMessage: freezed == latestMessage
+          ? _value.latestMessage
+          : latestMessage // ignore: cast_nullable_to_non_nullable
+              as ChatMessageDto?,
     ));
   }
 }
@@ -201,7 +230,8 @@ class _$_ChatDto extends _ChatDto {
       @JsonKey(defaultValue: []) final List<UserEntity> users = const [],
       @JsonKey(name: "group_admin") this.groupAdmin,
       required this.createdAt,
-      required this.updatedAt})
+      required this.updatedAt,
+      @JsonKey(name: "latest_message") this.latestMessage})
       : _users = users,
         super._();
 
@@ -232,10 +262,13 @@ class _$_ChatDto extends _ChatDto {
   final String createdAt;
   @override
   final String updatedAt;
+  @override
+  @JsonKey(name: "latest_message")
+  final ChatMessageDto? latestMessage;
 
   @override
   String toString() {
-    return 'ChatDto(id: $id, name: $name, isGroupChat: $isGroupChat, users: $users, groupAdmin: $groupAdmin, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'ChatDto(id: $id, name: $name, isGroupChat: $isGroupChat, users: $users, groupAdmin: $groupAdmin, createdAt: $createdAt, updatedAt: $updatedAt, latestMessage: $latestMessage)';
   }
 
   @override
@@ -253,7 +286,9 @@ class _$_ChatDto extends _ChatDto {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.latestMessage, latestMessage) ||
+                other.latestMessage == latestMessage));
   }
 
   @JsonKey(ignore: true)
@@ -266,7 +301,8 @@ class _$_ChatDto extends _ChatDto {
       const DeepCollectionEquality().hash(_users),
       groupAdmin,
       createdAt,
-      updatedAt);
+      updatedAt,
+      latestMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -284,13 +320,19 @@ class _$_ChatDto extends _ChatDto {
 
 abstract class _ChatDto extends ChatDto {
   const factory _ChatDto(
-      {@JsonKey(name: "_id") required final String id,
+      {@JsonKey(name: "_id")
+          required final String id,
       required final String name,
-      @JsonKey(name: "is_group_chat") required final bool isGroupChat,
-      @JsonKey(defaultValue: []) final List<UserEntity> users,
-      @JsonKey(name: "group_admin") final UserEntity? groupAdmin,
+      @JsonKey(name: "is_group_chat")
+          required final bool isGroupChat,
+      @JsonKey(defaultValue: [])
+          final List<UserEntity> users,
+      @JsonKey(name: "group_admin")
+          final UserEntity? groupAdmin,
       required final String createdAt,
-      required final String updatedAt}) = _$_ChatDto;
+      required final String updatedAt,
+      @JsonKey(name: "latest_message")
+          final ChatMessageDto? latestMessage}) = _$_ChatDto;
   const _ChatDto._() : super._();
 
   factory _ChatDto.fromJson(Map<String, dynamic> json) = _$_ChatDto.fromJson;
@@ -313,6 +355,9 @@ abstract class _ChatDto extends ChatDto {
   String get createdAt;
   @override
   String get updatedAt;
+  @override
+  @JsonKey(name: "latest_message")
+  ChatMessageDto? get latestMessage;
   @override
   @JsonKey(ignore: true)
   _$$_ChatDtoCopyWith<_$_ChatDto> get copyWith =>

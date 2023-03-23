@@ -236,12 +236,26 @@ class ChatListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: const Icon(Icons.account_circle, size: 50.0),
+      leading: CircleAvatar(
+        backgroundColor: chat.isGroupChat ? null : Colors.transparent,
+        child: chat.isGroupChat
+            ? Text(chat.name.characters.first)
+            : ClipOval(
+                child: Image.network(
+                  ChatHelpers.getSenderFull(currentUser, chat.users).avatar,
+                ),
+              ),
+      ),
       title: Text(
         chat.isGroupChat
             ? chat.name
             : ChatHelpers.getSender(currentUser, chat.users),
       ),
+      subtitle: chat.latestMessage != null
+          ? Text(
+              "${ChatHelpers.isSameUser(currentUser, chat.latestMessage!.sender) ? "You" : chat.latestMessage!.sender.name} ${chat.latestMessage?.content}",
+            )
+          : null,
       onTap: () => onTap(chat),
     );
   }

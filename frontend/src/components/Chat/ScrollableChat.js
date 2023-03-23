@@ -24,8 +24,8 @@ const ScrollableChat = ({ messages }) => {
               display: "flex",
             }}
           >
-            {(isSameSender(messages, msg, idx, user._id) ||
-              isLastMessage(messages, idx, user._id)) && (
+            {(isSameSender(messages, msg, idx, user.data.user._id) ||
+              isLastMessage(messages, idx, user.data.user._id)) && (
               <Tooltip
                 label={msg.sender.name}
                 placement="bottom-start"
@@ -44,12 +44,17 @@ const ScrollableChat = ({ messages }) => {
             <span
               style={{
                 backgroundColor: `${
-                  msg.sender._id === user._id ? "#BEE3F8" : "#B9F5D0"
+                  msg.sender._id === user.data.user._id ? "#BEE3F8" : "#B9F5D0"
                 }`,
                 borderRadius: "20px",
                 padding: "5px 15px",
                 maxWidth: "75%",
-                marginLeft: isSameSenderMargin(messages, msg, idx, user._id),
+                marginLeft: isSameSenderMargin(
+                  messages,
+                  msg,
+                  idx,
+                  user.data.user._id
+                ),
                 marginTop: isSameUser(messages, msg, idx) ? 3 : 10,
               }}
             >

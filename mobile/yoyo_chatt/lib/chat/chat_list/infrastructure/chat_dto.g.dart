@@ -19,6 +19,10 @@ _$_ChatDto _$$_ChatDtoFromJson(Map<String, dynamic> json) => _$_ChatDto(
           : UserEntity.fromJson(json['group_admin'] as Map<String, dynamic>),
       createdAt: json['createdAt'] as String,
       updatedAt: json['updatedAt'] as String,
+      latestMessage: json['latest_message'] == null
+          ? null
+          : ChatMessageDto.fromJson(
+              json['latest_message'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$_ChatDtoToJson(_$_ChatDto instance) =>
@@ -30,4 +34,5 @@ Map<String, dynamic> _$$_ChatDtoToJson(_$_ChatDto instance) =>
       'group_admin': instance.groupAdmin?.toJson(),
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
+      'latest_message': instance.latestMessage?.toJson(),
     };

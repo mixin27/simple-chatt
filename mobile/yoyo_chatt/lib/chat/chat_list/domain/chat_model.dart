@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yoyo_chatt/auth/models/credential.dart';
+import 'package:yoyo_chatt/chat/chat_message/domain/chat_message_model.dart';
 
 part 'chat_model.freezed.dart';
 
@@ -15,5 +16,6 @@ class ChatEntity with _$ChatEntity {
     UserEntity? groupAdmin,
     required String createdAt,
     required String updatedAt,
+    ChatMessageEntity? latestMessage,
   }) = _ChatEntity;
 }

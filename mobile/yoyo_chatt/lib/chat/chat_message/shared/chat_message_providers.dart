@@ -1,3 +1,4 @@
+import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yoyo_chatt/chat/chat_message/application/create_message_notifier.dart';
 import 'package:yoyo_chatt/chat/chat_message/application/get_messages_notifier.dart';
@@ -17,20 +18,22 @@ final chatMessageRepositoryProvider = Provider<ChatMessageRepository>((ref) {
 });
 
 final getChatMessagesNotifierProvider =
-    StateNotifierProvider.autoDispose<GetMessagesNotifier, GetMessagesState>(
-        (ref) {
+    StateNotifierProvider<GetMessagesNotifier, GetMessagesState>((ref) {
   return GetMessagesNotifier(
     chatMessageRepository: ref.watch(chatMessageRepositoryProvider),
   );
 });
 
-final createMessageNotifierProvider = StateNotifierProvider.autoDispose<
-    CreateMessageNotifier, CreateMessageState>((ref) {
+final createMessageNotifierProvider =
+    StateNotifierProvider<CreateMessageNotifier, CreateMessageState>((ref) {
   return CreateMessageNotifier(
     chatMessageRepository: ref.watch(chatMessageRepositoryProvider),
   );
 });
 
-final messageListProvider = StateProvider<List<ChatMessageEntity>>((ref) {
-  return [];
+final messageListProvider = StateProvider<List<ChatMessage>>((ref) {
+  return ref.watch(getChatMessagesNotifierProvider).maybeWhen(
+        orElse: () => [],
+        success: (messages) => messages.uiChatMessages.reversed.toList(),
+      );
 });

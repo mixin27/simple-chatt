@@ -23,13 +23,22 @@ class ChatPage extends HookConsumerWidget {
     final selectedChat = ref.watch(selectedChatProvider);
     if (selectedChat == null) return const SizedBox();
 
-    final messageState = ref.watch(getChatMessagesNotifierProvider);
+    final chatMessages = ref.watch(messageListProvider);
 
-    ref.listen(getChatMessagesNotifierProvider, (previous, next) {
+    ref.listen(createMessageNotifierProvider, (previous, next) {
       next.maybeMap(
         orElse: () {},
         success: (_) {
-          ref.read(messageListProvider.notifier).update((state) => _.messages);
+          ref
+              .read(messageListProvider.notifier)
+              .update((state) => [_.message.toChatMessage, ...state]);
+
+          ref.read(getChatsNotifierProvider.notifier).getAllChats();
+
+          dLog("Sending message successfully.");
+        },
+        error: (_) {
+          eLog(_.failure.message ?? "Error on sending message.");
         },
       );
     });
@@ -56,17 +65,17 @@ class ChatPage extends HookConsumerWidget {
             ),
           ),
           body: DashChat(
+            // typingUsers: [currentUser.toChatUser],
             currentUser: currentUser.toChatUser,
             onSend: (ChatMessage chatMessage) {
               wLog(chatMessage.toJson());
+
+              ref.read(createMessageNotifierProvider.notifier).sendMessage(
+                    content: chatMessage.text,
+                    chatId: selectedChat.id,
+                  );
             },
-            messages: messageState.map(
-              initial: (_) => [],
-              loading: (_) => [],
-              empty: (_) => [],
-              success: (_) => _.messages.uiChatMessages,
-              error: (_) => [],
-            ),
+            messages: chatMessages,
           ),
         ),
       ),

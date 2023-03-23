@@ -26,7 +26,7 @@ mixin _$ChatMessageDto {
   String get createdAt => throw _privateConstructorUsedError;
   String get updatedAt => throw _privateConstructorUsedError;
   UserEntity get sender => throw _privateConstructorUsedError;
-  ChatDto get chat => throw _privateConstructorUsedError;
+  dynamic get chat => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,10 +46,9 @@ abstract class $ChatMessageDtoCopyWith<$Res> {
       String createdAt,
       String updatedAt,
       UserEntity sender,
-      ChatDto chat});
+      dynamic chat});
 
   $UserEntityCopyWith<$Res> get sender;
-  $ChatDtoCopyWith<$Res> get chat;
 }
 
 /// @nodoc
@@ -70,7 +69,7 @@ class _$ChatMessageDtoCopyWithImpl<$Res, $Val extends ChatMessageDto>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? sender = null,
-    Object? chat = null,
+    Object? chat = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -93,10 +92,10 @@ class _$ChatMessageDtoCopyWithImpl<$Res, $Val extends ChatMessageDto>
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
               as UserEntity,
-      chat: null == chat
+      chat: freezed == chat
           ? _value.chat
           : chat // ignore: cast_nullable_to_non_nullable
-              as ChatDto,
+              as dynamic,
     ) as $Val);
   }
 
@@ -105,14 +104,6 @@ class _$ChatMessageDtoCopyWithImpl<$Res, $Val extends ChatMessageDto>
   $UserEntityCopyWith<$Res> get sender {
     return $UserEntityCopyWith<$Res>(_value.sender, (value) {
       return _then(_value.copyWith(sender: value) as $Val);
-    });
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ChatDtoCopyWith<$Res> get chat {
-    return $ChatDtoCopyWith<$Res>(_value.chat, (value) {
-      return _then(_value.copyWith(chat: value) as $Val);
     });
   }
 }
@@ -131,12 +122,10 @@ abstract class _$$_ChatMessageDtoCopyWith<$Res>
       String createdAt,
       String updatedAt,
       UserEntity sender,
-      ChatDto chat});
+      dynamic chat});
 
   @override
   $UserEntityCopyWith<$Res> get sender;
-  @override
-  $ChatDtoCopyWith<$Res> get chat;
 }
 
 /// @nodoc
@@ -155,7 +144,7 @@ class __$$_ChatMessageDtoCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? sender = null,
-    Object? chat = null,
+    Object? chat = freezed,
   }) {
     return _then(_$_ChatMessageDto(
       id: null == id
@@ -178,10 +167,10 @@ class __$$_ChatMessageDtoCopyWithImpl<$Res>
           ? _value.sender
           : sender // ignore: cast_nullable_to_non_nullable
               as UserEntity,
-      chat: null == chat
+      chat: freezed == chat
           ? _value.chat
           : chat // ignore: cast_nullable_to_non_nullable
-              as ChatDto,
+              as dynamic,
     ));
   }
 }
@@ -195,7 +184,7 @@ class _$_ChatMessageDto extends _ChatMessageDto {
       required this.createdAt,
       required this.updatedAt,
       required this.sender,
-      required this.chat})
+      this.chat})
       : super._();
 
   factory _$_ChatMessageDto.fromJson(Map<String, dynamic> json) =>
@@ -213,7 +202,7 @@ class _$_ChatMessageDto extends _ChatMessageDto {
   @override
   final UserEntity sender;
   @override
-  final ChatDto chat;
+  final dynamic chat;
 
   @override
   String toString() {
@@ -232,13 +221,13 @@ class _$_ChatMessageDto extends _ChatMessageDto {
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.sender, sender) || other.sender == sender) &&
-            (identical(other.chat, chat) || other.chat == chat));
+            const DeepCollectionEquality().equals(other.chat, chat));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, content, createdAt, updatedAt, sender, chat);
+  int get hashCode => Object.hash(runtimeType, id, content, createdAt,
+      updatedAt, sender, const DeepCollectionEquality().hash(chat));
 
   @JsonKey(ignore: true)
   @override
@@ -261,7 +250,7 @@ abstract class _ChatMessageDto extends ChatMessageDto {
       required final String createdAt,
       required final String updatedAt,
       required final UserEntity sender,
-      required final ChatDto chat}) = _$_ChatMessageDto;
+      final dynamic chat}) = _$_ChatMessageDto;
   const _ChatMessageDto._() : super._();
 
   factory _ChatMessageDto.fromJson(Map<String, dynamic> json) =
@@ -279,7 +268,7 @@ abstract class _ChatMessageDto extends ChatMessageDto {
   @override
   UserEntity get sender;
   @override
-  ChatDto get chat;
+  dynamic get chat;
   @override
   @JsonKey(ignore: true)
   _$$_ChatMessageDtoCopyWith<_$_ChatMessageDto> get copyWith =>
