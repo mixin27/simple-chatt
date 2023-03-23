@@ -145,7 +145,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
 
     if (!typing) {
       setTyping(true);
-      socket.emit("typing", selectedChat._id);
+      socket.emit("typing", selectedChat._id, user.data.user);
     }
     let lastTypingTime = new Date().getTime();
     var timerLength = 3000;

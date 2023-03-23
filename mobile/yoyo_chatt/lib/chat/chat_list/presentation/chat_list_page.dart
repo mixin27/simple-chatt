@@ -8,10 +8,15 @@ import 'package:yoyo_chatt/chat/chat_list/domain/chat_model.dart';
 import 'package:yoyo_chatt/chat/chat_list/shared/chat_providers.dart';
 import 'package:yoyo_chatt/chat/core/utils/chat_helpers.dart';
 import 'package:yoyo_chatt/core/providers/core_providers.dart';
+import 'package:yoyo_chatt/core/socket/socket_io.dart';
 import 'package:yoyo_chatt/core/utils/logger.dart';
 import 'package:yoyo_chatt/core/widgets/startup_container.dart';
 import 'package:yoyo_chatt/routes/app_router.gr.dart';
 import 'package:yoyo_chatt/user/shared/user_providers.dart';
+
+final isSocketConnectedProvider = StateProvider<bool>((ref) {
+  return false;
+});
 
 @RoutePage()
 class ChatListPage extends HookConsumerWidget {
@@ -50,6 +55,21 @@ class ChatListPage extends HookConsumerWidget {
       onInit: () {
         ref.read(getChatsNotifierProvider.notifier).getAllChats();
         ref.read(getUsersNotifierProvider.notifier).getAllUsers();
+
+        SocketIo.init();
+        SocketIo.instance.emit("setup", currentUser.toJson());
+        SocketIo.instance.on(
+          "connected",
+          (data) {
+            wLog("Socket connected");
+            ref
+                .read(isSocketConnectedProvider.notifier)
+                .update((state) => true);
+          },
+        );
+      },
+      onDisposed: () {
+        SocketIo.instance.disconnect();
       },
       child: Scaffold(
         appBar: AppBar(

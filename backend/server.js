@@ -79,8 +79,9 @@ io.on("connection", (socket) => {
     console.log("User join room: " + room);
   });
 
-  socket.on("typing", (room) => {
-    socket.in(room).emit("typing");
+  socket.on("typing", (room, user) => {
+    // console.log(user);
+    socket.in(room).emit("typing", user);
   });
 
   socket.on("stop typing", (room) => {

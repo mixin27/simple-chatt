@@ -32,6 +32,8 @@ dependencies:
   dash_chat_2: ^0.0.15
   intl: ^0.17.0
 
+  socket_io_client: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

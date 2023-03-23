@@ -23,4 +23,7 @@ class Endpoints {
   static const _baseChatMessage = "$_apiVersion/message";
 
   static const message = _baseChatMessage;
+
+  // Socket
+  static const socketUrl = "http://192.168.0.17:5000";
 }

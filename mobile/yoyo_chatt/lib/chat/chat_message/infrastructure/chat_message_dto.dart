@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yoyo_chatt/auth/models/credential.dart';
-import 'package:yoyo_chatt/chat/chat_list/domain/chat_model.dart';
 import 'package:yoyo_chatt/chat/chat_list/infrastructure/chat_dto.dart';
 import 'package:yoyo_chatt/chat/chat_message/domain/chat_message_model.dart';
 

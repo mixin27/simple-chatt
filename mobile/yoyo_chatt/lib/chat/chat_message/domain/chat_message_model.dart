@@ -1,7 +1,7 @@
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:yoyo_chatt/auth/models/credential.dart';
-import 'package:yoyo_chatt/chat/chat_list/domain/chat_model.dart';
+import 'package:yoyo_chatt/chat/chat_message/infrastructure/chat_message_dto.dart';
 import 'package:yoyo_chatt/core/utils/formatting.dart';
 
 part 'chat_message_model.freezed.dart';
@@ -26,6 +26,15 @@ class ChatMessageEntity with _$ChatMessageEntity {
       text: content,
     );
   }
+
+  ChatMessageDto toDto() => ChatMessageDto(
+        id: id,
+        content: content,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        sender: sender,
+        chat: chat,
+      );
 }
 
 extension ChatMessageEntityListX on List<ChatMessageEntity> {
